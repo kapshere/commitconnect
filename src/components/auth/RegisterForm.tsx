@@ -5,7 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, Lock, User, Facebook, Twitter, Linkedin } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 const RegisterForm = () => {
   const [firstName, setFirstName] = useState("");
@@ -13,16 +15,47 @@ const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const { signUp, signInWithProvider } = useAuth();
+  const { toast } = useToast();
+  const navigate = useNavigate();
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Registration with:", { firstName, lastName, email, password });
-    // Implement actual registration logic here
+    
+    if (password !== confirmPassword) {
+      toast({
+        title: "Passwords don't match",
+        description: "Please ensure both passwords are the same",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    setIsLoading(true);
+    
+    try {
+      await signUp(email, password, {
+        full_name: `${firstName} ${lastName}`,
+        username: email.split('@')[0], // Default username from email
+      });
+      
+      // In a real app, we might show a verification needed screen
+      navigate("/login");
+    } catch (error) {
+      console.error("Registration error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleSocialLogin = (provider: string) => {
-    console.log(`Register with ${provider}`);
-    // Implement social registration logic
+  const handleSocialLogin = async (provider: "facebook" | "twitter" | "linkedin") => {
+    try {
+      await signInWithProvider(provider);
+    } catch (error) {
+      console.error(`${provider} login error:`, error);
+    }
   };
 
   return (
@@ -117,8 +150,12 @@ const RegisterForm = () => {
             </Link>
           </div>
           
-          <Button type="submit" className="w-full bg-connect-500 hover:bg-connect-600">
-            Create Account
+          <Button 
+            type="submit" 
+            className="w-full bg-connect-500 hover:bg-connect-600"
+            disabled={isLoading}
+          >
+            {isLoading ? "Creating Account..." : "Create Account"}
           </Button>
         </form>
         

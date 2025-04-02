@@ -5,8 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, Lock, Phone, Facebook, Twitter, Linkedin } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Mail, Lock, Phone, Facebook, Twitter, Linkedin, Loader2 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -14,28 +16,50 @@ const LoginForm = () => {
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const { signIn, signInWithProvider } = useAuth();
+  const { toast } = useToast();
+  const navigate = useNavigate();
 
-  const handleEmailLogin = (e: React.FormEvent) => {
+  const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Email login with:", email, password);
-    // Implement actual login logic here
+    setIsLoading(true);
+    
+    try {
+      await signIn(email, password);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Login error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handlePhoneLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (isOtpSent) {
-      console.log("Phone login with:", phone, otp);
-      // Implement OTP verification logic
+      toast({
+        title: "Feature not implemented",
+        description: "Phone verification is not yet implemented",
+      });
     } else {
-      console.log("Sending OTP to:", phone);
+      toast({
+        title: "Feature not implemented",
+        description: "Phone verification is not yet implemented",
+      });
+      // For demo purposes, we'll simulate OTP being sent
       setIsOtpSent(true);
-      // Implement OTP sending logic
     }
   };
 
-  const handleSocialLogin = (provider: string) => {
-    console.log(`Login with ${provider}`);
-    // Implement social login logic
+  const handleSocialLogin = async (provider: "facebook" | "twitter" | "linkedin") => {
+    try {
+      await signInWithProvider(provider);
+      // Navigation will be handled by the callback component
+    } catch (error) {
+      console.error(`${provider} login error:`, error);
+    }
   };
 
   return (
@@ -90,8 +114,19 @@ const LoginForm = () => {
                   />
                 </div>
               </div>
-              <Button type="submit" className="w-full bg-connect-500 hover:bg-connect-600">
-                Sign In
+              <Button 
+                type="submit" 
+                className="w-full bg-connect-500 hover:bg-connect-600"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Signing In...
+                  </>
+                ) : (
+                  "Sign In"
+                )}
               </Button>
             </form>
           </TabsContent>
