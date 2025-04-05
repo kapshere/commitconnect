@@ -5,10 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, Lock, Phone, Facebook, Twitter, Linkedin, Loader2 } from "lucide-react";
+import { Mail, Lock, Phone, Facebook, Twitter, Linkedin, Loader2, AlertCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "@/hooks/use-toast";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -17,20 +18,26 @@ const LoginForm = () => {
   const [otp, setOtp] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   
   const { signIn, signInWithProvider } = useAuth();
-  const { toast } = useToast();
   const navigate = useNavigate();
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setErrorMessage(null);
     
     try {
       await signIn(email, password);
       navigate("/dashboard");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Login error:", error);
+      if (error.message?.includes("Invalid login credentials")) {
+        setErrorMessage("Invalid email or password. Please check your credentials and try again.");
+      } else {
+        setErrorMessage(error.message || "An error occurred during login");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -54,11 +61,13 @@ const LoginForm = () => {
   };
 
   const handleSocialLogin = async (provider: "facebook" | "twitter" | "linkedin") => {
+    setErrorMessage(null);
     try {
       await signInWithProvider(provider);
       // Navigation will be handled by the callback component
-    } catch (error) {
+    } catch (error: any) {
       console.error(`${provider} login error:`, error);
+      setErrorMessage(`Error signing in with ${provider}: ${error.message}`);
     }
   };
 
@@ -71,6 +80,13 @@ const LoginForm = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
+        {errorMessage && (
+          <Alert variant="destructive" className="mb-4">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>{errorMessage}</AlertDescription>
+          </Alert>
+        )}
+        
         <Tabs defaultValue="email" className="w-full">
           <TabsList className="grid w-full grid-cols-2 mb-6">
             <TabsTrigger value="email">Email</TabsTrigger>
