@@ -2,18 +2,25 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { CommitmentType, Commitment } from "@/types/commitments";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CommitmentTypeSelector from "@/components/commitment/CommitmentTypeSelector";
 import PersonalCommitmentForm from "@/components/commitment/PersonalCommitmentForm";
 import BusinessCommitmentForm from "@/components/commitment/BusinessCommitmentForm";
-import { Card } from "@/components/ui/card";
+import ContractCommitmentForm from "@/components/commitment/ContractCommitmentForm";
+import ReligiousCommitmentForm from "@/components/commitment/ReligiousCommitmentForm";
+import PromiseCommitmentForm from "@/components/commitment/PromiseCommitmentForm";
+import FriendlyCommitmentForm from "@/components/commitment/FriendlyCommitmentForm";
+import TrustCommitmentForm from "@/components/commitment/TrustCommitmentForm";
+import { Card, CardContent } from "@/components/ui/card";
+import { ArrowLeft } from "lucide-react";
 
 const CreateCommitment = () => {
   const [selectedType, setSelectedType] = useState<CommitmentType | null>(null);
   const navigate = useNavigate();
-  const { toast } = useToast();
+  const { toast: uiToast } = useToast();
   
   const handleTypeSelect = (type: CommitmentType) => {
     setSelectedType(type);
@@ -25,12 +32,15 @@ const CreateCommitment = () => {
     // Mock submission - in a real app, this would save to the backend
     const mockId = "commitment-" + Date.now();
     
-    toast({
-      title: "Commitment Created",
+    toast.success("Commitment Created", {
       description: `Your ${selectedType} commitment has been created successfully.`,
+      action: {
+        label: "View",
+        onClick: () => navigate(`/commitment/${mockId}`),
+      },
     });
     
-    // Navigate back to dashboard
+    // Navigate to the new commitment details page
     setTimeout(() => {
       navigate(`/commitment/${mockId}`);
     }, 1000);
@@ -43,43 +53,48 @@ const CreateCommitment = () => {
       case "business":
         return <BusinessCommitmentForm onSubmit={handleSubmit} />;
       case "contract":
-        return <p className="text-center p-6">Contract commitment form coming soon...</p>;
+        return <ContractCommitmentForm onSubmit={handleSubmit} />;
       case "religious":
-        return <p className="text-center p-6">Religious commitment form coming soon...</p>;
+        return <ReligiousCommitmentForm onSubmit={handleSubmit} />;
       case "promise":
-        return <p className="text-center p-6">Promise commitment form coming soon...</p>;
+        return <PromiseCommitmentForm onSubmit={handleSubmit} />;
       case "friendly":
-        return <p className="text-center p-6">Friendly commitment form coming soon...</p>;
+        return <FriendlyCommitmentForm onSubmit={handleSubmit} />;
       case "trust":
-        return <p className="text-center p-6">Trust commitment form coming soon...</p>;
+        return <TrustCommitmentForm onSubmit={handleSubmit} />;
       default:
         return null;
     }
   };
   
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       <Navbar />
       
-      <main className="flex-grow py-8">
+      <main className="flex-grow py-12">
         <div className="connect-container">
-          <h1 className="text-3xl font-bold mb-8 text-center">Create New Commitment</h1>
+          <h1 className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-connect-500 to-blue-600 bg-clip-text text-transparent">
+            Create New Commitment
+          </h1>
           
-          <Card className="p-6 shadow-md">
-            {!selectedType ? (
-              <CommitmentTypeSelector onSelect={handleTypeSelect} />
-            ) : (
-              <div>
-                <button 
-                  onClick={() => setSelectedType(null)}
-                  className="text-connect-500 mb-6 inline-flex items-center hover:underline"
-                >
-                  ← Back to commitment types
-                </button>
-                
-                {renderForm()}
-              </div>
-            )}
+          <Card className="shadow-lg border-0 overflow-hidden artful-card">
+            <CardContent className="p-6 sm:p-8">
+              {!selectedType ? (
+                <CommitmentTypeSelector onSelect={handleTypeSelect} />
+              ) : (
+                <div className="animate-fade-in">
+                  <button 
+                    onClick={() => setSelectedType(null)}
+                    className="text-connect-500 mb-6 inline-flex items-center hover:underline"
+                  >
+                    <ArrowLeft className="mr-1 h-4 w-4" />
+                    Back to commitment types
+                  </button>
+                  
+                  {renderForm()}
+                </div>
+              )}
+            </CardContent>
           </Card>
         </div>
       </main>

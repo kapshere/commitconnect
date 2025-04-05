@@ -1,104 +1,122 @@
 
 import { useState } from "react";
 import { CommitmentType } from "@/types/commitments";
-import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
 import { 
   User, 
   Briefcase, 
-  ScrollText, 
-  Church, 
-  HandshakeIcon, 
+  FileText, 
+  BookOpen, 
+  Handshake, 
   Heart, 
-  Lock 
+  Lock, 
+  ChevronRight 
 } from "lucide-react";
 
 interface CommitmentTypeSelectorProps {
   onSelect: (type: CommitmentType) => void;
 }
 
-interface TypeOption {
-  value: CommitmentType;
-  label: string;
-  icon: React.ReactNode;
-  description: string;
-}
-
 const CommitmentTypeSelector = ({ onSelect }: CommitmentTypeSelectorProps) => {
-  const [selectedType, setSelectedType] = useState<CommitmentType | null>(null);
-  
-  const commitmentTypes: TypeOption[] = [
+  const [hoveredType, setHoveredType] = useState<CommitmentType | null>(null);
+
+  const commitmentTypes = [
     {
-      value: "personal",
-      label: "Personal",
-      icon: <User className="h-10 w-10 text-blue-500" />,
-      description: "Track personal goals and ambitions, tag others as associated or informed."
+      type: "personal" as CommitmentType,
+      title: "Personal",
+      description: "Set personal goals and ambitions that you can optionally share with others",
+      icon: User,
+      color: "bg-gradient-to-r from-blue-500 to-teal-400",
     },
     {
-      value: "business",
-      label: "Business",
-      icon: <Briefcase className="h-10 w-10 text-green-600" />,
-      description: "Create business agreements with contracts, invoices and other documents."
+      type: "business" as CommitmentType,
+      title: "Business",
+      description: "Create business agreements with immutable document storage",
+      icon: Briefcase,
+      color: "bg-gradient-to-r from-purple-500 to-indigo-500",
     },
     {
-      value: "contract",
-      label: "Contract",
-      icon: <ScrollText className="h-10 w-10 text-purple-600" />,
-      description: "Formal contracts between individuals or organizations."
+      type: "contract" as CommitmentType,
+      title: "Contract",
+      description: "Formalize contracts between parties with legal documentation",
+      icon: FileText,
+      color: "bg-gradient-to-r from-gray-700 to-gray-500",
     },
     {
-      value: "religious",
-      label: "Religious",
-      icon: <Church className="h-10 w-10 text-amber-600" />,
-      description: "Spiritual commitments made with religious significance."
+      type: "religious" as CommitmentType,
+      title: "Religious",
+      description: "Make sacred commitments in accordance with your faith",
+      icon: BookOpen,
+      color: "bg-gradient-to-r from-yellow-500 to-orange-500",
     },
     {
-      value: "promise",
-      label: "Promise",
-      icon: <Heart className="h-10 w-10 text-red-500" />,
-      description: "Simple promises between people."
+      type: "promise" as CommitmentType,
+      title: "Promise",
+      description: "Create meaningful promises to yourself or others",
+      icon: Handshake,
+      color: "bg-gradient-to-r from-green-500 to-emerald-500",
     },
     {
-      value: "friendly",
-      label: "Friendly",
-      icon: <HandshakeIcon className="h-10 w-10 text-teal-500" />,
-      description: "Casual commitments between friends and acquaintances."
+      type: "friendly" as CommitmentType,
+      title: "Friendly",
+      description: "Fun commitments between friends for activities and events",
+      icon: Heart,
+      color: "bg-gradient-to-r from-pink-500 to-rose-400",
     },
     {
-      value: "trust",
-      label: "Trust",
-      icon: <Lock className="h-10 w-10 text-indigo-600" />,
-      description: "Secure commitments with encrypted secrets shared between parties."
-    }
+      type: "trust" as CommitmentType,
+      title: "Trust",
+      description: "Share encrypted secrets that only trusted parties can access",
+      icon: Lock,
+      color: "bg-gradient-to-r from-red-500 to-rose-600",
+    },
   ];
 
-  const handleSelect = (type: CommitmentType) => {
-    setSelectedType(type);
-    onSelect(type);
-  };
-
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-semibold text-center">Choose a Commitment Type</h2>
+    <div className="space-y-8">
+      <div className="text-center mb-8">
+        <h2 className="text-2xl font-bold mb-2">Choose Commitment Type</h2>
+        <p className="text-gray-600 dark:text-gray-300">
+          Select the type of commitment you want to create
+        </p>
+      </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {commitmentTypes.map((type) => (
-          <Card 
-            key={type.value}
-            className={`cursor-pointer transition-all hover:shadow-md ${
-              selectedType === type.value 
-                ? "ring-2 ring-connect-500 shadow-lg" 
-                : "hover:border-connect-300"
-            }`}
-            onClick={() => handleSelect(type.value)}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {commitmentTypes.map((item) => (
+          <motion.div
+            key={item.type}
+            className={`
+              relative rounded-xl overflow-hidden cursor-pointer
+              border border-transparent hover:border-white/10
+              shadow-md
+            `}
+            whileHover={{ scale: 1.03, y: -5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            onMouseEnter={() => setHoveredType(item.type)}
+            onMouseLeave={() => setHoveredType(null)}
+            onClick={() => onSelect(item.type)}
           >
-            <CardContent className="p-6 flex flex-col items-center text-center space-y-3">
-              <div className="p-3 rounded-full bg-gray-50">
-                {type.icon}
+            <div className={`${item.color} absolute inset-0 opacity-90`} />
+            <div className="relative p-6 text-white h-full flex flex-col">
+              <div className="bg-white/20 p-3 rounded-full w-fit mb-4">
+                <item.icon className="h-6 w-6" />
               </div>
-              <h3 className="font-medium text-lg">{type.label}</h3>
-              <p className="text-sm text-gray-500">{type.description}</p>
-            </CardContent>
-          </Card>
+              <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+              <p className="text-white/80 text-sm mb-4 flex-grow">
+                {item.description}
+              </p>
+              <div 
+                className={`
+                  flex items-center mt-2 text-sm font-medium 
+                  transition-opacity duration-300 
+                  ${hoveredType === item.type ? 'opacity-100' : 'opacity-70'}
+                `}
+              >
+                <span>Select</span>
+                <ChevronRight className="ml-1 h-4 w-4" />
+              </div>
+            </div>
+          </motion.div>
         ))}
       </div>
     </div>

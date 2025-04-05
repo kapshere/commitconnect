@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import AuthCallback from "@/components/auth/AuthCallback";
+import { motion, AnimatePresence } from "framer-motion";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -19,7 +20,29 @@ import { StrictMode } from "react";
 import CreateCommitment from "./pages/CreateCommitment";
 import CommitmentDetails from "./pages/CommitmentDetails";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    }
+  }
+});
+
+const PageTransition = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.3 }}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
+  );
+};
 
 const App = () => (
   <StrictMode>
@@ -31,23 +54,23 @@ const App = () => (
             <Sonner />
             <Routes>
               {/* Public routes */}
-              <Route path="/" element={<Index />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+              <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+              <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
+              <Route path="/register" element={<PageTransition><Register /></PageTransition>} />
               <Route path="/auth/callback" element={<AuthCallback />} />
               
               {/* Protected routes */}
               <Route element={<ProtectedRoute />}>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/connections" element={<Connections />} />
-                <Route path="/wallet" element={<Wallet />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/create-commitment" element={<CreateCommitment />} />
-                <Route path="/commitment/:id" element={<CommitmentDetails />} />
+                <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
+                <Route path="/connections" element={<PageTransition><Connections /></PageTransition>} />
+                <Route path="/wallet" element={<PageTransition><Wallet /></PageTransition>} />
+                <Route path="/profile" element={<PageTransition><Profile /></PageTransition>} />
+                <Route path="/create-commitment" element={<PageTransition><CreateCommitment /></PageTransition>} />
+                <Route path="/commitment/:id" element={<PageTransition><CommitmentDetails /></PageTransition>} />
               </Route>
               
               {/* 404 route */}
-              <Route path="*" element={<NotFound />} />
+              <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
             </Routes>
           </TooltipProvider>
         </AuthProvider>
