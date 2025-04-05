@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -42,6 +41,7 @@ const CommitmentDetails = () => {
     status: "active",
     createdAt: "2023-08-15",
     deadline: "2023-12-31",
+    createdBy: "user-123", // Added the missing createdBy property
     parties: [
       { id: "1", name: "You", role: "associated" as const },
       { id: "2", name: "John Doe", role: "associated" as const },
