@@ -16,6 +16,8 @@ import Wallet from "./pages/Wallet";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import { StrictMode } from "react";
+import CreateCommitment from "./pages/CreateCommitment";
+import CommitmentDetails from "./pages/CommitmentDetails";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +42,8 @@ const App = () => (
                 <Route path="/connections" element={<Connections />} />
                 <Route path="/wallet" element={<Wallet />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/create-commitment" element={<CreateCommitment />} />
+                <Route path="/commitment/:id" element={<CommitmentDetails />} />
               </Route>
               
               {/* 404 route */}
