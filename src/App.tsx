@@ -8,6 +8,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import AuthCallback from "@/components/auth/AuthCallback";
 import { motion, AnimatePresence } from "framer-motion";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -46,36 +47,38 @@ const PageTransition = ({ children }: { children: React.ReactNode }) => {
 
 const App = () => (
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <AuthProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <Routes>
-              {/* Public routes */}
-              <Route path="/" element={<PageTransition><Index /></PageTransition>} />
-              <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
-              <Route path="/register" element={<PageTransition><Register /></PageTransition>} />
-              <Route path="/auth/callback" element={<AuthCallback />} />
-              
-              {/* Protected routes */}
-              <Route element={<ProtectedRoute />}>
-                <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
-                <Route path="/connections" element={<PageTransition><Connections /></PageTransition>} />
-                <Route path="/wallet" element={<PageTransition><Wallet /></PageTransition>} />
-                <Route path="/profile" element={<PageTransition><Profile /></PageTransition>} />
-                <Route path="/create-commitment" element={<PageTransition><CreateCommitment /></PageTransition>} />
-                <Route path="/commitment/:id" element={<PageTransition><CommitmentDetails /></PageTransition>} />
-              </Route>
-              
-              {/* 404 route */}
-              <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
-            </Routes>
-          </TooltipProvider>
-        </AuthProvider>
-      </BrowserRouter>
-    </QueryClientProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <AuthProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <Routes>
+                {/* Public routes */}
+                <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+                <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
+                <Route path="/register" element={<PageTransition><Register /></PageTransition>} />
+                <Route path="/auth/callback" element={<AuthCallback />} />
+                
+                {/* Protected routes */}
+                <Route element={<ProtectedRoute />}>
+                  <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
+                  <Route path="/connections" element={<PageTransition><Connections /></PageTransition>} />
+                  <Route path="/wallet" element={<PageTransition><Wallet /></PageTransition>} />
+                  <Route path="/profile" element={<PageTransition><Profile /></PageTransition>} />
+                  <Route path="/create-commitment" element={<PageTransition><CreateCommitment /></PageTransition>} />
+                  <Route path="/commitment/:id" element={<PageTransition><CommitmentDetails /></PageTransition>} />
+                </Route>
+                
+                {/* 404 route */}
+                <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+              </Routes>
+            </TooltipProvider>
+          </AuthProvider>
+        </BrowserRouter>
+      </QueryClientProvider>
+    </ThemeProvider>
   </StrictMode>
 );
 

@@ -109,6 +109,10 @@ export default {
 				'glow': {
 					'0%, 100%': { boxShadow: '0 0 10px 2px rgba(26, 115, 232, 0.2)' },
 					'50%': { boxShadow: '0 0 18px 4px rgba(26, 115, 232, 0.4)' }
+				},
+				'theme-fade': {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' }
 				}
 			},
 			animation: {
@@ -116,13 +120,16 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.3s ease-out',
 				'slide-up': 'slide-up 0.4s ease-out',
-				'glow': 'glow 2s ease-in-out infinite'
+				'glow': 'glow 2s ease-in-out infinite',
+				'theme-fade': 'theme-fade 0.5s ease-out'
 			},
 			boxShadow: {
 				'google': '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
 				'google-hover': '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
 				'card-hover': '0 10px 20px rgba(26, 115, 232, 0.1), 0 6px 6px rgba(26, 115, 232, 0.12)',
-				'glow': '0 0 15px rgba(26, 115, 232, 0.5)'
+				'glow': '0 0 15px rgba(26, 115, 232, 0.5)',
+				'dark': '0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.25)',
+				'dark-lg': '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.25)'
 			}
 		}
 	},

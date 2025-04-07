@@ -47,7 +47,7 @@ const LoginForm = () => {
         <SocialLoginButtons onError={handleError} />
       </CardContent>
       <CardFooter className="flex flex-col space-y-4">
-        <div className="text-center text-sm">
+        <div className="text-center text-sm text-gray-600 dark:text-gray-400">
           Don't have an account?{" "}
           <Link to="/register" className="text-connect-500 hover:text-connect-600 font-medium">
             Sign up
