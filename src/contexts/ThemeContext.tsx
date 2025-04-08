@@ -9,19 +9,21 @@ type ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        return savedTheme === 'dark';
-      }
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-    return false;
-  });
+  // Initialize with a default value that won't cause hydration issues
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  
+  // Set the initial theme once the component mounts
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    setIsDarkMode(savedTheme === 'dark' || (!savedTheme && prefersDark));
+  }, []);
 
+  // Apply theme changes to the document
   useEffect(() => {
     const root = window.document.documentElement;
+    
     if (isDarkMode) {
       root.classList.add('dark');
       localStorage.setItem('theme', 'dark');
@@ -35,8 +37,10 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     setIsDarkMode(!isDarkMode);
   };
 
+  const value = { isDarkMode, toggleTheme };
+
   return (
-    <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );

@@ -14,9 +14,9 @@ const ThemeToggle = () => {
       className="border border-gray-200 dark:border-gray-800 rounded-full w-10 h-10 p-1 flex items-center justify-center"
     >
       {isDarkMode ? (
-        <Moon className="h-4 w-4 text-connect-200" />
+        <Moon className="h-4 w-4" />
       ) : (
-        <Sun className="h-4 w-4 text-connect-500" />
+        <Sun className="h-4 w-4" />
       )}
     </Toggle>
   );
