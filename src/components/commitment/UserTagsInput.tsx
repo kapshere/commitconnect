@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Check, X, Plus, User } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,11 @@ const mockUsers = [
   { id: "user3", name: "Michael Brown" },
   { id: "user4", name: "Emily Davis" },
   { id: "user5", name: "David Wilson" },
+  { id: "user6", name: "Jessica Moore" },
+  { id: "user7", name: "Ryan Taylor" },
+  { id: "user8", name: "Olivia Martin" },
+  { id: "user9", name: "Daniel White" },
+  { id: "user10", name: "Sophia Thompson" },
 ];
 
 const UserTagsInput = ({ onTagsChange, className }: UserTagsInputProps) => {
@@ -28,55 +33,62 @@ const UserTagsInput = ({ onTagsChange, className }: UserTagsInputProps) => {
   const [suggestions, setSuggestions] = useState<typeof mockUsers>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
+  // Always show some suggestions when the input is focused
+  const handleInputFocus = () => {
+    if (!inputValue) {
+      // Show all available users that aren't already tagged
+      const availableUsers = mockUsers.filter(
+        user => !tags.some(tag => tag.id === user.id)
+      );
+      setSuggestions(availableUsers.slice(0, 5)); // Limit to first 5 for better UI
+      setShowSuggestions(availableUsers.length > 0);
+    }
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputValue(value);
     
-    if (value.length > 1) {
-      // Filter users based on input
-      const filtered = mockUsers.filter(user => 
-        user.name.toLowerCase().includes(value.toLowerCase()) &&
-        !tags.some(tag => tag.id === user.id)
-      );
-      setSuggestions(filtered);
-      setShowSuggestions(filtered.length > 0);
-    } else {
-      setSuggestions([]);
-      setShowSuggestions(false);
-    }
+    // Filter users based on input or show all if empty
+    const filtered = mockUsers.filter(user => 
+      (value === '' || user.name.toLowerCase().includes(value.toLowerCase())) &&
+      !tags.some(tag => tag.id === user.id)
+    );
+    setSuggestions(filtered);
+    setShowSuggestions(filtered.length > 0);
   };
 
   const addTag = (user?: typeof mockUsers[0]) => {
     if (user) {
       // Add existing user
       const newTag = { id: user.id, name: user.name, role: selectedRole };
-      setTags([...tags, newTag]);
+      const updatedTags = [...tags, newTag];
+      setTags(updatedTags);
+      onTagsChange(updatedTags);
     } else if (inputValue) {
-      // Add manually entered name
+      // Add manually entered name (likely an email)
       const newTag = { 
         id: `manual-${Date.now()}`, 
         name: inputValue, 
         role: selectedRole 
       };
-      setTags([...tags, newTag]);
+      const updatedTags = [...tags, newTag];
+      setTags(updatedTags);
+      onTagsChange(updatedTags);
     }
     
     setInputValue("");
     setSuggestions([]);
     setShowSuggestions(false);
-    
-    // Notify parent component
-    const updatedTags = user 
-      ? [...tags, { id: user.id, name: user.name, role: selectedRole }]
-      : [...tags, { id: `manual-${Date.now()}`, name: inputValue, role: selectedRole }];
-    
-    onTagsChange(updatedTags);
   };
 
   const removeTag = (id: string) => {
     const updatedTags = tags.filter(tag => tag.id !== id);
     setTags(updatedTags);
     onTagsChange(updatedTags);
+    
+    // Refresh suggestions after removing a tag
+    handleInputFocus();
   };
 
   const updateTagRole = (id: string, newRole: "associated" | "informed") => {
@@ -87,6 +99,11 @@ const UserTagsInput = ({ onTagsChange, className }: UserTagsInputProps) => {
     onTagsChange(updatedTags);
   };
 
+  // Initialize suggestions once component mounts
+  useEffect(() => {
+    handleInputFocus();
+  }, []);
+
   return (
     <div className={cn("space-y-3", className)}>
       <div className="flex items-center space-x-2">
@@ -95,6 +112,7 @@ const UserTagsInput = ({ onTagsChange, className }: UserTagsInputProps) => {
             placeholder="Type a name or email address"
             value={inputValue}
             onChange={handleInputChange}
+            onFocus={handleInputFocus}
             className="pr-10"
           />
           {inputValue && (
@@ -110,16 +128,22 @@ const UserTagsInput = ({ onTagsChange, className }: UserTagsInputProps) => {
           {showSuggestions && (
             <div className="absolute z-10 mt-1 w-full bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700">
               <ul className="py-1 max-h-60 overflow-auto">
-                {suggestions.map(user => (
-                  <li
-                    key={user.id}
-                    className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center"
-                    onClick={() => addTag(user)}
-                  >
-                    <User className="h-4 w-4 mr-2 text-gray-500" />
-                    {user.name}
+                {suggestions.length > 0 ? (
+                  suggestions.map(user => (
+                    <li
+                      key={user.id}
+                      className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center"
+                      onClick={() => addTag(user)}
+                    >
+                      <User className="h-4 w-4 mr-2 text-gray-500" />
+                      {user.name}
+                    </li>
+                  ))
+                ) : (
+                  <li className="px-4 py-2 text-sm text-gray-500">
+                    No users found. Press + to add as email.
                   </li>
-                ))}
+                )}
               </ul>
             </div>
           )}

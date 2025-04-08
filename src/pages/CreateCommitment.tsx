@@ -32,18 +32,30 @@ const CreateCommitment = () => {
     // Mock submission - in a real app, this would save to the backend
     const mockId = "commitment-" + Date.now();
     
+    // Store the created commitment in sessionStorage for retrieval
+    const commitmentData = {
+      id: mockId,
+      ...data,
+      createdAt: new Date().toISOString(),
+    };
+    
+    // Store the commitment data for the details page to access
+    sessionStorage.setItem(`commitment-${mockId}`, JSON.stringify(commitmentData));
+    
     toast.success("Commitment Created", {
       description: `Your ${selectedType} commitment has been created successfully.`,
       action: {
         label: "View",
-        onClick: () => navigate(`/commitment/${mockId}`),
+        onClick: () => {
+          navigate(`/commitment/${mockId}`);
+        },
       },
     });
     
     // Navigate to the new commitment details page
     setTimeout(() => {
       navigate(`/commitment/${mockId}`);
-    }, 1000);
+    }, 500);
   };
   
   const renderForm = () => {
@@ -68,7 +80,7 @@ const CreateCommitment = () => {
   };
   
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-gray-100 dark:from-blue-900/30 dark:to-gray-800">
       <Navbar />
       
       <main className="flex-grow py-12">

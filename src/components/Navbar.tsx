@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Wallet, User, Users, CheckSquare, Menu, X } from "lucide-react";
 import { useState } from "react";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,10 +50,12 @@ const Navbar = () => {
                 Sign In
               </Button>
             </Link>
+            <ThemeToggle />
           </div>
           
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
+          <div className="md:hidden flex items-center space-x-2">
+            <ThemeToggle />
             <button
               onClick={toggleMenu}
               className="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600"

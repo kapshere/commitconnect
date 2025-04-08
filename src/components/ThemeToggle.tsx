@@ -11,12 +11,12 @@ const ThemeToggle = () => {
       aria-label="Toggle dark mode"
       pressed={isDarkMode}
       onPressedChange={toggleTheme}
-      className="border border-gray-200 dark:border-gray-800 rounded-full w-10 h-10 p-1 flex items-center justify-center"
+      className="border border-gray-200 dark:border-gray-700 rounded-full w-10 h-10 p-1 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700"
     >
       {isDarkMode ? (
-        <Moon className="h-4 w-4" />
+        <Moon className="h-4 w-4 text-blue-900 dark:text-blue-300" />
       ) : (
-        <Sun className="h-4 w-4" />
+        <Sun className="h-4 w-4 text-connect-500 dark:text-connect-300" />
       )}
     </Toggle>
   );

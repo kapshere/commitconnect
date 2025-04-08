@@ -37,6 +37,18 @@ export default {
 					800: '#0a3373',
 					900: '#051d4d',
 				},
+				navy: {
+					50: '#f0f4fa',
+					100: '#d9e2f5',
+					200: '#b3c6eb',
+					300: '#8da9e0',
+					400: '#6687d6',
+					500: '#4065cb',
+					600: '#3451a3',
+					700: '#283d7a',
+					800: '#1c2952',
+					900: '#0e1429',
+				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
