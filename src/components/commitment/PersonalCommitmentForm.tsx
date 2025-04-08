@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import UserTagsInput from "./UserTagsInput";
 
 const formSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
@@ -55,6 +55,7 @@ const PersonalCommitmentForm = ({ onSubmit }: PersonalCommitmentFormProps) => {
       ...values,
       type: "personal",
       parties: taggedUsers,
+      status: "active",
       deadline: values.deadline ? format(values.deadline, "yyyy-MM-dd") : undefined
     };
     
@@ -194,47 +195,20 @@ const PersonalCommitmentForm = ({ onSubmit }: PersonalCommitmentFormProps) => {
           
           {/* Tagged Users Section */}
           <div className="space-y-4 p-4 border rounded-lg">
-            <div className="flex justify-between items-center">
-              <h3 className="font-medium">Tag Users</h3>
-              <Button type="button" variant="outline" size="sm">
-                Add User
-              </Button>
+            <div>
+              <h3 className="font-medium mb-2">Tag Users</h3>
+              <UserTagsInput 
+                onTagsChange={(tags) => setTaggedUsers(tags)} 
+                className="glow-effect"
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Add users who are associated with your commitment or need to be informed
+              </p>
             </div>
-            
-            {taggedUsers.length > 0 ? (
-              <div className="space-y-2">
-                {taggedUsers.map((user, index) => (
-                  <div key={index} className="flex items-center justify-between p-2 border rounded">
-                    <div>
-                      <p className="font-medium">{user.name}</p>
-                      <p className="text-sm text-gray-500">{user.email}</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <RadioGroup value={user.role} onValueChange={(value) => {
-                        const updatedUsers = [...taggedUsers];
-                        updatedUsers[index].role = value as "associated" | "informed";
-                        setTaggedUsers(updatedUsers);
-                      }}>
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem value="associated" id={`associated-${index}`} />
-                          <label htmlFor={`associated-${index}`}>Associated</label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem value="informed" id={`informed-${index}`} />
-                          <label htmlFor={`informed-${index}`}>Informed</label>
-                        </div>
-                      </RadioGroup>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-500 text-sm">No users tagged yet</p>
-            )}
           </div>
           
           <div className="flex justify-end gap-4 pt-4">
-            <Button type="button" variant="outline">Cancel</Button>
+            <Button type="button" variant="outline" onClick={() => window.history.back()}>Cancel</Button>
             <Button type="submit">Create Commitment</Button>
           </div>
         </form>

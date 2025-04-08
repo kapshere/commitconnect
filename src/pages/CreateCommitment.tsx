@@ -20,7 +20,6 @@ import { ArrowLeft } from "lucide-react";
 const CreateCommitment = () => {
   const [selectedType, setSelectedType] = useState<CommitmentType | null>(null);
   const navigate = useNavigate();
-  const { toast: uiToast } = useToast();
   
   const handleTypeSelect = (type: CommitmentType) => {
     setSelectedType(type);
@@ -29,7 +28,7 @@ const CreateCommitment = () => {
   const handleSubmit = (data: Partial<Commitment>) => {
     console.log("Creating commitment:", data);
     
-    // Mock submission - in a real app, this would save to the backend
+    // Generate a unique ID for the commitment
     const mockId = "commitment-" + Date.now();
     
     // Store the created commitment in sessionStorage for retrieval
@@ -40,7 +39,7 @@ const CreateCommitment = () => {
     };
     
     // Store the commitment data for the details page to access
-    sessionStorage.setItem(`commitment-${mockId}`, JSON.stringify(commitmentData));
+    sessionStorage.setItem(mockId, JSON.stringify(commitmentData));
     
     toast.success("Commitment Created", {
       description: `Your ${selectedType} commitment has been created successfully.`,
