@@ -1,4 +1,3 @@
-
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WalletCard from "@/components/WalletCard";
@@ -89,7 +88,7 @@ const Wallet = () => {
       <Navbar />
       
       <main className="flex-grow py-8">
-        <div className="connect-container">
+        <div className="connect-container pb-16">
           <div className="mb-8">
             <h1 className="text-3xl font-bold">Your Wallet</h1>
             <p className="text-gray-600 dark:text-gray-300">
@@ -137,7 +136,7 @@ const Wallet = () => {
             </div>
             
             <div className="lg:col-span-2">
-              <Card>
+              <Card className="overflow-hidden">
                 <CardHeader>
                   <CardTitle className="text-lg">Transaction History</CardTitle>
                 </CardHeader>
@@ -150,43 +149,13 @@ const Wallet = () => {
                       <TabsTrigger value="withdrawals">Withdrawals</TabsTrigger>
                     </TabsList>
                     
-                    <TabsContent value="all" className="mt-0">
-                      <div className="space-y-4">
-                        {transactions.map((transaction) => (
-                          <div key={transaction.id} className="flex items-center justify-between p-3 border rounded-md">
-                            <div className="flex items-center">
-                              <div className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center mr-3">
-                                {getTransactionIcon(transaction.type)}
-                              </div>
-                              <div>
-                                <p className="font-medium">{transaction.description}</p>
-                                <p className="text-xs text-gray-500">
-                                  {new Date(transaction.date).toLocaleDateString()}
-                                </p>
-                              </div>
-                            </div>
-                            <div className="flex items-center">
-                              <p className={`font-medium mr-2 ${
-                                transaction.type === "deposit" ? "text-green-500" : "text-gray-900 dark:text-gray-100"
-                              }`}>
-                                {transaction.type === "deposit" ? "+" : transaction.type === "withdrawal" ? "-" : ""}
-                                ${transaction.amount.toFixed(2)}
-                              </p>
-                              {getStatusIcon(transaction.status)}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </TabsContent>
-                    
-                    <TabsContent value="charges" className="mt-0">
-                      <div className="space-y-4">
-                        {transactions
-                          .filter((tx) => tx.type === "charge")
-                          .map((transaction) => (
+                    <div className="max-h-[500px] overflow-y-auto pr-2">
+                      <TabsContent value="all" className="mt-0">
+                        <div className="space-y-4">
+                          {transactions.map((transaction) => (
                             <div key={transaction.id} className="flex items-center justify-between p-3 border rounded-md">
                               <div className="flex items-center">
-                                <div className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center mr-3">
+                                <div className="h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center mr-3">
                                   {getTransactionIcon(transaction.type)}
                                 </div>
                                 <div>
@@ -197,71 +166,103 @@ const Wallet = () => {
                                 </div>
                               </div>
                               <div className="flex items-center">
-                                <p className="font-medium mr-2">
+                                <p className={`font-medium mr-2 ${
+                                  transaction.type === "deposit" ? "text-green-500" : "text-gray-900 dark:text-gray-100"
+                                }`}>
+                                  {transaction.type === "deposit" ? "+" : transaction.type === "withdrawal" ? "-" : ""}
                                   ${transaction.amount.toFixed(2)}
                                 </p>
                                 {getStatusIcon(transaction.status)}
                               </div>
                             </div>
                           ))}
-                      </div>
-                    </TabsContent>
-                    
-                    <TabsContent value="deposits" className="mt-0">
-                      <div className="space-y-4">
-                        {transactions
-                          .filter((tx) => tx.type === "deposit")
-                          .map((transaction) => (
-                            <div key={transaction.id} className="flex items-center justify-between p-3 border rounded-md">
-                              <div className="flex items-center">
-                                <div className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center mr-3">
-                                  {getTransactionIcon(transaction.type)}
+                        </div>
+                      </TabsContent>
+                      
+                      <TabsContent value="charges" className="mt-0">
+                        <div className="space-y-4">
+                          {transactions
+                            .filter((tx) => tx.type === "charge")
+                            .map((transaction) => (
+                              <div key={transaction.id} className="flex items-center justify-between p-3 border rounded-md">
+                                <div className="flex items-center">
+                                  <div className="h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center mr-3">
+                                    {getTransactionIcon(transaction.type)}
+                                  </div>
+                                  <div>
+                                    <p className="font-medium">{transaction.description}</p>
+                                    <p className="text-xs text-gray-500">
+                                      {new Date(transaction.date).toLocaleDateString()}
+                                    </p>
+                                  </div>
                                 </div>
-                                <div>
-                                  <p className="font-medium">{transaction.description}</p>
-                                  <p className="text-xs text-gray-500">
-                                    {new Date(transaction.date).toLocaleDateString()}
+                                <div className="flex items-center">
+                                  <p className="font-medium mr-2">
+                                    ${transaction.amount.toFixed(2)}
                                   </p>
+                                  {getStatusIcon(transaction.status)}
                                 </div>
                               </div>
-                              <div className="flex items-center">
-                                <p className="font-medium text-green-500 mr-2">
-                                  +${transaction.amount.toFixed(2)}
-                                </p>
-                                {getStatusIcon(transaction.status)}
-                              </div>
-                            </div>
-                          ))}
-                      </div>
-                    </TabsContent>
-                    
-                    <TabsContent value="withdrawals" className="mt-0">
-                      <div className="space-y-4">
-                        {transactions
-                          .filter((tx) => tx.type === "withdrawal")
-                          .map((transaction) => (
-                            <div key={transaction.id} className="flex items-center justify-between p-3 border rounded-md">
-                              <div className="flex items-center">
-                                <div className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center mr-3">
-                                  {getTransactionIcon(transaction.type)}
+                            ))}
+                        </div>
+                      </TabsContent>
+                      
+                      <TabsContent value="deposits" className="mt-0">
+                        <div className="space-y-4">
+                          {transactions
+                            .filter((tx) => tx.type === "deposit")
+                            .map((transaction) => (
+                              <div key={transaction.id} className="flex items-center justify-between p-3 border rounded-md">
+                                <div className="flex items-center">
+                                  <div className="h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center mr-3">
+                                    {getTransactionIcon(transaction.type)}
+                                  </div>
+                                  <div>
+                                    <p className="font-medium">{transaction.description}</p>
+                                    <p className="text-xs text-gray-500">
+                                      {new Date(transaction.date).toLocaleDateString()}
+                                    </p>
+                                  </div>
                                 </div>
-                                <div>
-                                  <p className="font-medium">{transaction.description}</p>
-                                  <p className="text-xs text-gray-500">
-                                    {new Date(transaction.date).toLocaleDateString()}
+                                <div className="flex items-center">
+                                  <p className="font-medium text-green-500 mr-2">
+                                    +${transaction.amount.toFixed(2)}
                                   </p>
+                                  {getStatusIcon(transaction.status)}
                                 </div>
                               </div>
-                              <div className="flex items-center">
-                                <p className="font-medium mr-2">
-                                  -${transaction.amount.toFixed(2)}
-                                </p>
-                                {getStatusIcon(transaction.status)}
+                            ))}
+                        </div>
+                      </TabsContent>
+                      
+                      <TabsContent value="withdrawals" className="mt-0">
+                        <div className="space-y-4">
+                          {transactions
+                            .filter((tx) => tx.type === "withdrawal")
+                            .map((transaction) => (
+                              <div key={transaction.id} className="flex items-center justify-between p-3 border rounded-md">
+                                <div className="flex items-center">
+                                  <div className="h-8 w-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center mr-3">
+                                    {getTransactionIcon(transaction.type)}
+                                  </div>
+                                  <div>
+                                    <p className="font-medium">{transaction.description}</p>
+                                    <p className="text-xs text-gray-500">
+                                      {new Date(transaction.date).toLocaleDateString()}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="flex items-center">
+                                  <p className="font-medium mr-2">
+                                    -${transaction.amount.toFixed(2)}
+                                  </p>
+                                  {getStatusIcon(transaction.status)}
+                                </div>
                               </div>
-                            </div>
-                          ))}
-                      </div>
-                    </TabsContent>
+                            ))}
+                        </div>
+                      </TabsContent>
+                    </div>
                   </Tabs>
                 </CardContent>
               </Card>

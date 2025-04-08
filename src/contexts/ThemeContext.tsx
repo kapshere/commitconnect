@@ -11,17 +11,23 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   // Initialize with a default value that won't cause hydration issues
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [hasInitialized, setHasInitialized] = useState(false);
   
   // Set the initial theme once the component mounts
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    setIsDarkMode(savedTheme === 'dark' || (!savedTheme && prefersDark));
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      setIsDarkMode(savedTheme === 'dark' || (!savedTheme && prefersDark));
+      setHasInitialized(true);
+    }
   }, []);
 
   // Apply theme changes to the document
   useEffect(() => {
+    if (!hasInitialized) return;
+    
     const root = window.document.documentElement;
     
     if (isDarkMode) {
@@ -31,7 +37,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       root.classList.remove('dark');
       localStorage.setItem('theme', 'light');
     }
-  }, [isDarkMode]);
+  }, [isDarkMode, hasInitialized]);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
