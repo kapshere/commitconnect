@@ -29,7 +29,7 @@ const CreateCommitment = () => {
     console.log("Creating commitment:", data);
     
     // Generate a unique ID for the commitment
-    const mockId = "commitment-" + Date.now();
+    const mockId = `commitment-${Date.now()}`;
     
     // Store the created commitment in sessionStorage for retrieval
     const commitmentData = {
@@ -38,7 +38,7 @@ const CreateCommitment = () => {
       createdAt: new Date().toISOString(),
     };
     
-    // Store the commitment data for the details page to access
+    // Store the commitment data with the full ID as the key
     sessionStorage.setItem(mockId, JSON.stringify(commitmentData));
     
     toast.success("Commitment Created", {

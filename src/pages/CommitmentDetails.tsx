@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
@@ -38,14 +37,20 @@ const CommitmentDetails = () => {
   
   useEffect(() => {
     if (id) {
-      // Try to get the commitment data from sessionStorage
-      const storedCommitment = sessionStorage.getItem(`commitment-${id}`);
+      console.log("Looking for commitment with ID:", id);
+      // Try to get the commitment data from sessionStorage using the exact ID
+      const storedCommitment = sessionStorage.getItem(id);
+      
       if (storedCommitment) {
         try {
-          setCommitment(JSON.parse(storedCommitment));
+          const parsedCommitment = JSON.parse(storedCommitment);
+          console.log("Found commitment:", parsedCommitment);
+          setCommitment(parsedCommitment);
         } catch (error) {
           console.error("Error parsing commitment data:", error);
         }
+      } else {
+        console.error("No commitment found with ID:", id);
       }
       setLoading(false);
     }
@@ -115,13 +120,11 @@ const CommitmentDetails = () => {
     }
   };
 
-  // For trust commitments - mock decryption
   const decryptSecret = () => {
     const encryptedText = (commitment as TrustCommitment).secretEncrypted;
     return atob(encryptedText || ""); // Simple base64 decode for demo
   };
 
-  // Get type color
   const getTypeColor = (type: CommitmentType = "personal") => {
     switch (type) {
       case "personal":
@@ -229,7 +232,6 @@ const CommitmentDetails = () => {
                 </div>
               )}
               
-              {/* Type-specific content */}
               {commitment.type === "trust" && (commitment as TrustCommitment).secretEncrypted && (
                 <div className="p-6 border border-dotted rounded-lg bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
                   <div className="text-center mb-4">
@@ -280,7 +282,6 @@ const CommitmentDetails = () => {
                 </div>
               )}
 
-              {/* Personal commitment specific content */}
               {commitment.type === "personal" && (commitment as any).goal && (
                 <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                   <h3 className="font-medium mb-2">Goal</h3>
@@ -288,7 +289,6 @@ const CommitmentDetails = () => {
                 </div>
               )}
 
-              {/* Promise commitment specific content */}
               {commitment.type === "promise" && (commitment as any).promiseType && (
                 <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
                   <h3 className="font-medium mb-2">Promise Type</h3>
