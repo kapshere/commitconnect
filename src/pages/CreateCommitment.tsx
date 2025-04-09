@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
 import { toast } from "sonner";
 import { CommitmentType, Commitment } from "@/types/commitments";
 import Navbar from "@/components/Navbar";
@@ -79,16 +78,16 @@ const CreateCommitment = () => {
   };
   
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-gray-100 dark:from-blue-900/30 dark:to-gray-800">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-earth-50 to-earth-100 dark:from-blue-900/30 dark:to-gray-800">
       <Navbar />
       
       <main className="flex-grow py-12">
         <div className="connect-container">
-          <h1 className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-connect-500 to-blue-600 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-nordic-600 to-nordic-500 bg-clip-text text-transparent">
             Create New Commitment
           </h1>
           
-          <Card className="shadow-lg border-0 overflow-hidden artful-card">
+          <Card className="shadow-nordic border-0 overflow-hidden artful-card">
             <CardContent className="p-6 sm:p-8">
               {!selectedType ? (
                 <CommitmentTypeSelector onSelect={handleTypeSelect} />
@@ -96,7 +95,7 @@ const CreateCommitment = () => {
                 <div className="animate-fade-in">
                   <button 
                     onClick={() => setSelectedType(null)}
-                    className="text-connect-500 mb-6 inline-flex items-center hover:underline"
+                    className="text-nordic-500 mb-6 inline-flex items-center hover:underline"
                   >
                     <ArrowLeft className="mr-1 h-4 w-4" />
                     Back to commitment types

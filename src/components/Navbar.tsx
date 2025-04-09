@@ -20,24 +20,24 @@ const Navbar = () => {
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <div className="h-8 w-8 rounded-full bg-connect-500 flex items-center justify-center mr-2">
+              <div className="h-8 w-8 rounded-full bg-nordic-500 flex items-center justify-center mr-2">
                 <Users className="h-5 w-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-connect-600 dark:text-connect-400">Connect</span>
+              <span className="text-xl font-bold text-nordic-600 dark:text-nordic-400">Connect</span>
             </Link>
           </div>
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link to="/dashboard" className="text-navy-600 hover:text-connect-500 dark:text-gray-300 dark:hover:text-connect-400 flex items-center">
+            <Link to="/dashboard" className="text-nordic-700 hover:text-nordic-500 dark:text-gray-300 dark:hover:text-nordic-400 flex items-center">
               <CheckSquare className="h-4 w-4 mr-1" />
               <span>Commitments</span>
             </Link>
-            <Link to="/connections" className="text-navy-600 hover:text-connect-500 dark:text-gray-300 dark:hover:text-connect-400 flex items-center">
+            <Link to="/connections" className="text-nordic-700 hover:text-nordic-500 dark:text-gray-300 dark:hover:text-nordic-400 flex items-center">
               <Users className="h-4 w-4 mr-1" />
               <span>Connections</span>
             </Link>
-            <Link to="/wallet" className="text-navy-600 hover:text-connect-500 dark:text-gray-300 dark:hover:text-connect-400 flex items-center">
+            <Link to="/wallet" className="text-nordic-700 hover:text-nordic-500 dark:text-gray-300 dark:hover:text-nordic-400 flex items-center">
               <Wallet className="h-4 w-4 mr-1" />
               <span>Wallet</span>
             </Link>
@@ -50,7 +50,7 @@ const Navbar = () => {
               </Link>
             ) : (
               <Link to="/login">
-                <Button variant="default" size="sm" className="bg-connect-500 hover:bg-connect-600">
+                <Button variant="default" size="sm" className="bg-nordic-500 hover:bg-nordic-600">
                   Sign In
                 </Button>
               </Link>
@@ -80,7 +80,7 @@ const Navbar = () => {
             <div className="flex flex-col space-y-4 pb-3">
               <Link 
                 to="/dashboard" 
-                className="text-navy-600 hover:text-connect-500 dark:text-gray-300 dark:hover:text-connect-400 flex items-center"
+                className="text-nordic-700 hover:text-nordic-500 dark:text-gray-300 dark:hover:text-nordic-400 flex items-center"
                 onClick={() => setIsOpen(false)}
               >
                 <CheckSquare className="h-4 w-4 mr-2" />
@@ -88,7 +88,7 @@ const Navbar = () => {
               </Link>
               <Link 
                 to="/connections" 
-                className="text-navy-600 hover:text-connect-500 dark:text-gray-300 dark:hover:text-connect-400 flex items-center"
+                className="text-nordic-700 hover:text-nordic-500 dark:text-gray-300 dark:hover:text-nordic-400 flex items-center"
                 onClick={() => setIsOpen(false)}
               >
                 <Users className="h-4 w-4 mr-2" />
@@ -96,7 +96,7 @@ const Navbar = () => {
               </Link>
               <Link 
                 to="/wallet" 
-                className="text-navy-600 hover:text-connect-500 dark:text-gray-300 dark:hover:text-connect-400 flex items-center"
+                className="text-nordic-700 hover:text-nordic-500 dark:text-gray-300 dark:hover:text-nordic-400 flex items-center"
                 onClick={() => setIsOpen(false)}
               >
                 <Wallet className="h-4 w-4 mr-2" />
@@ -117,7 +117,7 @@ const Navbar = () => {
                   to="/login"
                   onClick={() => setIsOpen(false)}
                 >
-                  <Button variant="default" size="sm" className="w-full bg-connect-500 hover:bg-connect-600">
+                  <Button variant="default" size="sm" className="w-full bg-nordic-500 hover:bg-nordic-600">
                     Sign In
                   </Button>
                 </Link>

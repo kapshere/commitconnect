@@ -49,6 +49,30 @@ export default {
 					800: '#1c2952',
 					900: '#0e1429',
 				},
+				nordic: {
+					50: '#f5f7f7',
+					100: '#e6e9ea',
+					200: '#d1d7d9', 
+					300: '#a8b8bd',
+					400: '#6e868f', // Soft teal blue
+					500: '#4a6670', // Primary Nordic blue
+					600: '#38505a',
+					700: '#2c4049',
+					800: '#20303a',
+					900: '#192630',
+				},
+				earth: {
+					50: '#f9f6f3',
+					100: '#f3ece5',
+					200: '#e7d7c9',
+					300: '#d9bea6',
+					400: '#c19c7a', // Warm beige
+					500: '#a87f5d',
+					600: '#8c674a',
+					700: '#74563e',
+					800: '#614a37',
+					900: '#523f31',
+				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
@@ -119,8 +143,8 @@ export default {
 					'100%': { transform: 'translateY(0)', opacity: '1' }
 				},
 				'glow': {
-					'0%, 100%': { boxShadow: '0 0 10px 2px rgba(26, 115, 232, 0.2)' },
-					'50%': { boxShadow: '0 0 18px 4px rgba(26, 115, 232, 0.4)' }
+					'0%, 100%': { boxShadow: '0 0 10px 2px rgba(74, 102, 112, 0.2)' },
+					'50%': { boxShadow: '0 0 18px 4px rgba(74, 102, 112, 0.3)' }
 				},
 				'theme-fade': {
 					'0%': { opacity: '0' },
@@ -136,9 +160,12 @@ export default {
 				'theme-fade': 'theme-fade 0.5s ease-out'
 			},
 			boxShadow: {
+				'nordic': '0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.12)',
+				'nordic-hover': '0 14px 28px rgba(74, 102, 112, 0.15), 0 10px 10px rgba(74, 102, 112, 0.10)',
+				'nordic-glow': '0 0 15px rgba(74, 102, 112, 0.3)',
+				'card-hover': '0 10px 20px rgba(74, 102, 112, 0.08), 0 6px 6px rgba(74, 102, 112, 0.10)',
 				'google': '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
 				'google-hover': '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
-				'card-hover': '0 10px 20px rgba(26, 115, 232, 0.1), 0 6px 6px rgba(26, 115, 232, 0.12)',
 				'glow': '0 0 15px rgba(26, 115, 232, 0.5)',
 				'dark': '0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.25)',
 				'dark-lg': '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.25)'
