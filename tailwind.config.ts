@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -31,7 +30,7 @@ export default {
 					200: '#99d3ff',
 					300: '#66bdff',
 					400: '#33a7ff',
-					500: '#1a73e8', // Google blue
+					500: '#1a73e8',
 					600: '#145cc0',
 					700: '#0f4899',
 					800: '#0a3373',
@@ -50,15 +49,15 @@ export default {
 					900: '#0e1429',
 				},
 				nordic: {
-					50: '#f5f7f7',
-					100: '#e6e9ea',
-					200: '#d1d7d9', 
-					300: '#a8b8bd',
-					400: '#6e868f', // Soft teal blue
-					500: '#4a6670', // Primary Nordic blue
-					600: '#38505a',
-					700: '#2c4049',
-					800: '#20303a',
+					50: '#f5f7f9',
+					100: '#e6edf2',
+					200: '#d1e0e8',
+					300: '#a8c6d6',
+					400: '#6ea3bc',
+					500: '#4a7f99',
+					600: '#386673',
+					700: '#2c5460',
+					800: '#20404a',
 					900: '#192630',
 				},
 				earth: {
@@ -66,7 +65,7 @@ export default {
 					100: '#f3ece5',
 					200: '#e7d7c9',
 					300: '#d9bea6',
-					400: '#c19c7a', // Warm beige
+					400: '#c19c7a',
 					500: '#a87f5d',
 					600: '#8c674a',
 					700: '#74563e',
