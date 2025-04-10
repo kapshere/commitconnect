@@ -31,8 +31,8 @@ const WalletCard = ({ balance, currency }: WalletCardProps) => {
           </Button>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-between border-t pt-4">
-        <Button variant="default" size="sm" className="w-[48%] bg-connect-500 hover:bg-connect-600">
+      <CardFooter className="flex justify-between pt-4">
+        <Button variant="default" size="sm" className="w-[48%]">
           <PlusCircle className="h-4 w-4 mr-2" />
           Add Funds
         </Button>

@@ -92,7 +92,7 @@ const CommitmentCard = ({
       transition={{ type: "spring", stiffness: 300 }}
     >
       <Link to={`/commitment/${id}`}>
-        <Card className="h-full overflow-hidden artful-card">
+        <Card className="h-full overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
           <CardHeader className="pb-3 pt-4">
             <div className="flex items-start justify-between">
               <div className="flex items-center space-x-3">
@@ -131,7 +131,7 @@ const CommitmentCard = ({
               
               {value && (
                 <div className="flex items-center text-sm font-medium">
-                  <span className="text-connect-600 dark:text-connect-400">${value.toLocaleString()}</span>
+                  <span className="text-primary dark:text-primary/90">${value.toLocaleString()}</span>
                 </div>
               )}
             </div>

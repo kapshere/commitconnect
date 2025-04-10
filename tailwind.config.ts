@@ -31,11 +31,11 @@ export default {
 					200: '#99d3ff',
 					300: '#66bdff',
 					400: '#33a7ff',
-					500: '#1a73e8', // Google blue
-					600: '#145cc0',
-					700: '#0f4899',
-					800: '#0a3373',
-					900: '#051d4d',
+					500: '#4285f4', // Google blue
+					600: '#3367d6',
+					700: '#2a56c6',
+					800: '#1e47ac',
+					900: '#0d2f8b',
 				},
 				navy: {
 					50: '#f0f4fa',
@@ -54,8 +54,8 @@ export default {
 					100: '#e6e9ea',
 					200: '#d1d7d9', 
 					300: '#a8b8bd',
-					400: '#6e868f', // Soft teal blue
-					500: '#4a6670', // Primary Nordic blue
+					400: '#6e868f',
+					500: '#4a6670',
 					600: '#38505a',
 					700: '#2c4049',
 					800: '#20303a',
@@ -66,7 +66,7 @@ export default {
 					100: '#f3ece5',
 					200: '#e7d7c9',
 					300: '#d9bea6',
-					400: '#c19c7a', // Warm beige
+					400: '#c19c7a',
 					500: '#a87f5d',
 					600: '#8c674a',
 					700: '#74563e',
@@ -143,8 +143,8 @@ export default {
 					'100%': { transform: 'translateY(0)', opacity: '1' }
 				},
 				'glow': {
-					'0%, 100%': { boxShadow: '0 0 10px 2px rgba(74, 102, 112, 0.2)' },
-					'50%': { boxShadow: '0 0 18px 4px rgba(74, 102, 112, 0.3)' }
+					'0%, 100%': { boxShadow: '0 0 10px 2px rgba(66, 133, 244, 0.2)' }, // Google blue glow
+					'50%': { boxShadow: '0 0 18px 4px rgba(66, 133, 244, 0.3)' }
 				},
 				'theme-fade': {
 					'0%': { opacity: '0' },
@@ -160,13 +160,12 @@ export default {
 				'theme-fade': 'theme-fade 0.5s ease-out'
 			},
 			boxShadow: {
-				'nordic': '0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.12)',
-				'nordic-hover': '0 14px 28px rgba(74, 102, 112, 0.15), 0 10px 10px rgba(74, 102, 112, 0.10)',
-				'nordic-glow': '0 0 15px rgba(74, 102, 112, 0.3)',
-				'card-hover': '0 10px 20px rgba(74, 102, 112, 0.08), 0 6px 6px rgba(74, 102, 112, 0.10)',
-				'google': '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
-				'google-hover': '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
-				'glow': '0 0 15px rgba(26, 115, 232, 0.5)',
+				'sm': '0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1)',
+				'DEFAULT': '0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06)',
+				'md': '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)',
+				'lg': '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)',
+				'xl': '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)',
+				'glow': '0 0 15px rgba(66, 133, 244, 0.4)', // Google blue glow
 				'dark': '0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.25)',
 				'dark-lg': '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.25)'
 			}

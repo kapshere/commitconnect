@@ -17,11 +17,11 @@ const ConnectionCard = ({ name, avatar, role, commitmentCount, isConnected }: Co
   return (
     <Card className="h-full transition-all duration-300 hover:shadow-md">
       <CardHeader className="pb-3 pt-4 flex flex-row items-center space-x-4">
-        <div className="h-12 w-12 rounded-full bg-connect-100 flex items-center justify-center">
+        <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
           {avatar ? (
             <img src={avatar} alt={name} className="h-12 w-12 rounded-full" />
           ) : (
-            <User className="h-6 w-6 text-connect-500" />
+            <User className="h-6 w-6 text-primary" />
           )}
         </div>
         <div>
@@ -37,7 +37,7 @@ const ConnectionCard = ({ name, avatar, role, commitmentCount, isConnected }: Co
           </Badge>
         </div>
       </CardContent>
-      <CardFooter className="border-t pt-4 flex justify-between">
+      <CardFooter className="pt-4 flex justify-between">
         <Button variant="outline" size="sm" className="w-[48%]">
           <MessageSquare className="h-4 w-4 mr-1" />
           Message
@@ -48,7 +48,7 @@ const ConnectionCard = ({ name, avatar, role, commitmentCount, isConnected }: Co
             Connected
           </Button>
         ) : (
-          <Button variant="default" size="sm" className="w-[48%] bg-connect-500 hover:bg-connect-600">
+          <Button variant="default" size="sm" className="w-[48%]">
             <UserPlus className="h-4 w-4 mr-1" />
             Connect
           </Button>
