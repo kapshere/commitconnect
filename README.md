@@ -1,73 +1,110 @@
-# Welcome to your Lovable project
 
-## Project info
+# Connect: Commitment Management Application
 
-**URL**: https://lovable.dev/projects/b9e4606f-71be-40f1-b143-65033f72a795
+## About Connect
 
-## How can I edit this code?
+Connect is a modern web application designed to help users create, manage and track various types of commitments between parties. Whether personal promises, business agreements, or contracts, Connect provides a secure and transparent way to document and verify commitments.
 
-There are several ways of editing your application.
+## Features
 
-**Use Lovable**
+- User authentication and profile management
+- Create and manage different types of commitments
+- Real-time updates on commitment status
+- Document storage for commitment-related files
+- Connection management between users
+- Digital wallet integration
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/b9e4606f-71be-40f1-b143-65033f72a795) and start prompting.
+## Technical Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Frontend**: React, TypeScript, Tailwind CSS, shadcn/ui
+- **Backend**: Supabase (PostgreSQL, Auth, Storage, Functions)
+- **State Management**: TanStack Query (React Query)
+- **Styling**: Tailwind CSS with custom theme
+- **Authentication**: Supabase Auth
 
-**Use your preferred IDE**
+## Getting Started
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Prerequisites
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Node.js 18+ and npm
+- Supabase account
 
-Follow these steps:
+### Installation
 
+1. Clone the repository:
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+git clone <repository-url>
+cd connect
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+2. Install dependencies:
+```sh
+npm install
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
+3. Configure environment variables:
+Create a `.env` file in the project root with the following variables:
+```
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+4. Run the development server:
+```sh
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Backend Architecture
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The application uses Supabase as its backend with the potential to migrate to AWS QLDB in the future. For detailed information on the backend architecture, see:
 
-**Use GitHub Codespaces**
+- [Backend Architecture Documentation](./docs/BACKEND_ARCHITECTURE.md)
+- [Supabase to QLDB Migration Guide](./docs/SUPABASE_TO_QLDB_MIGRATION.md)
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Database Schema
 
-## What technologies are used for this project?
+The following tables are used in the Supabase database:
 
-This project is built with .
+### profiles
+- Stores user profile information
+- Automatically created when a user signs up
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### commitments
+- Core table for commitment data
+- Stores common fields like title, description, status
 
-## How can I deploy this project?
+### commitment_parties
+- Junction table for users involved in commitments
+- Defines the role of each user in the commitment
 
-Simply open [Lovable](https://lovable.dev/projects/b9e4606f-71be-40f1-b143-65033f72a795) and click on Share -> Publish.
+### commitment_documents
+- Stores document references for commitments
+- Links to files in Storage
 
-## Can I connect a custom domain to my Lovable project?
+### commitment_history
+- Tracks changes to commitments over time
+- Useful for audit and verification
 
-Yes it is!
+## API Documentation
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+The application uses Supabase as its backend API. The CommitmentService class provides methods for interacting with the Supabase API:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- `createCommitment`: Creates a new commitment
+- `getUserCommitments`: Gets all commitments created by the current user
+- `getParticipatingCommitments`: Gets all commitments where the user is a participant
+- `getCommitmentById`: Gets a specific commitment by its ID
+- `updateCommitment`: Updates a commitment's details
+- `updateCommitmentStatus`: Updates a commitment's status
+- `deleteCommitment`: Deletes a commitment
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
