@@ -9,6 +9,230 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      commitment_documents: {
+        Row: {
+          commitment_id: string
+          id: string
+          name: string
+          type: string | null
+          uploaded_at: string
+          uploaded_by: string
+          url: string
+        }
+        Insert: {
+          commitment_id: string
+          id?: string
+          name: string
+          type?: string | null
+          uploaded_at?: string
+          uploaded_by: string
+          url: string
+        }
+        Update: {
+          commitment_id?: string
+          id?: string
+          name?: string
+          type?: string | null
+          uploaded_at?: string
+          uploaded_by?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "commitment_documents_commitment_id_fkey"
+            columns: ["commitment_id"]
+            isOneToOne: false
+            referencedRelation: "commitments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      commitment_history: {
+        Row: {
+          change_details: Json | null
+          changed_at: string
+          changed_by: string
+          commitment_id: string
+          id: string
+          new_status: string | null
+          previous_status: string | null
+        }
+        Insert: {
+          change_details?: Json | null
+          changed_at?: string
+          changed_by: string
+          commitment_id: string
+          id?: string
+          new_status?: string | null
+          previous_status?: string | null
+        }
+        Update: {
+          change_details?: Json | null
+          changed_at?: string
+          changed_by?: string
+          commitment_id?: string
+          id?: string
+          new_status?: string | null
+          previous_status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "commitment_history_commitment_id_fkey"
+            columns: ["commitment_id"]
+            isOneToOne: false
+            referencedRelation: "commitments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      commitment_parties: {
+        Row: {
+          commitment_id: string
+          created_at: string
+          email: string | null
+          id: string
+          name: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          commitment_id: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          name: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          commitment_id?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "commitment_parties_commitment_id_fkey"
+            columns: ["commitment_id"]
+            isOneToOne: false
+            referencedRelation: "commitments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      commitment_types: {
+        Row: {
+          created_at: string
+          description: string | null
+          icon: string | null
+          label: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          label: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          label?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      commitments: {
+        Row: {
+          contract_details: string | null
+          contract_type: string | null
+          created_at: string
+          created_by: string
+          deadline: string | null
+          deity: string | null
+          description: string
+          goal: string | null
+          id: string
+          is_public: boolean | null
+          milestone: string | null
+          occasion: string | null
+          promise_type: string | null
+          religion: string | null
+          ritual: string | null
+          secret_encrypted: string | null
+          status: string
+          terms: string | null
+          title: string
+          trust_level: string | null
+          type: string
+          updated_at: string
+          value: number | null
+        }
+        Insert: {
+          contract_details?: string | null
+          contract_type?: string | null
+          created_at?: string
+          created_by: string
+          deadline?: string | null
+          deity?: string | null
+          description: string
+          goal?: string | null
+          id?: string
+          is_public?: boolean | null
+          milestone?: string | null
+          occasion?: string | null
+          promise_type?: string | null
+          religion?: string | null
+          ritual?: string | null
+          secret_encrypted?: string | null
+          status?: string
+          terms?: string | null
+          title: string
+          trust_level?: string | null
+          type: string
+          updated_at?: string
+          value?: number | null
+        }
+        Update: {
+          contract_details?: string | null
+          contract_type?: string | null
+          created_at?: string
+          created_by?: string
+          deadline?: string | null
+          deity?: string | null
+          description?: string
+          goal?: string | null
+          id?: string
+          is_public?: boolean | null
+          milestone?: string | null
+          occasion?: string | null
+          promise_type?: string | null
+          religion?: string | null
+          ritual?: string | null
+          secret_encrypted?: string | null
+          status?: string
+          terms?: string | null
+          title?: string
+          trust_level?: string | null
+          type?: string
+          updated_at?: string
+          value?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "commitments_type_fkey"
+            columns: ["type"]
+            isOneToOne: false
+            referencedRelation: "commitment_types"
+            referencedColumns: ["name"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
